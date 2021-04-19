@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>HB Resi Harvester</Name>
+    <Assembly>..\HBResiHarvester\HBResiHarvester.dll</Assembly>
+    <AddInId>b5e7254d-c21a-472d-ba93-4782d283d49b</AddInId>
+    <FullClassName>HBResiHarvester.RevitApplication.HBResiHarvesterApp</FullClassName>
+    <VendorId>HAWKINSBROWN</VendorId>
+    <VendorDescription>Hawkins\Brown Digital Design: There is an issue with the tool that needs to be addressed by 
+      the Digital Design team. Please contact them to tell them they have screwed up something!</VendorDescription>
+  </AddIn>
+</RevitAddIns>
