@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Bimorph.WebApi.Core;
+using HBResiHarvester.Interfaces;
 
 namespace HBResiHarvester.UI.ViewModels
 {
-    public class UploadDataCommand : ICommand
+    public class AreaHarvestCommand : ICommand
     {
-        private readonly WebClientService _webClientService;
-
-        internal  UploadDataCommand(WebClientService webClientService)
+        private IHarvester _dataHarvester;
+        internal AreaHarvestCommand(IHarvester dataHarvester)
         {
-            _webClientService = webClientService;
+            _dataHarvester = dataHarvester;
         }
+
         /// <summary>Defines the method that determines whether the command can execute in its current state.</summary>
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to <see langword="null" />.</param>
         /// <returns>
@@ -25,24 +25,25 @@ namespace HBResiHarvester.UI.ViewModels
             return true;
         }
 
-        /// <summary>Defines the method to be called when the command is invoked.</summary>
-        /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to <see langword="null" />.</param>
+        /// <summary>
+        ///Defines the method to be called when the command is invoked.
+        /// </summary>
+        /// <param name="parameter">
+        /// Data used by the command.
+        /// If the command does not require data to be passed, this object can be set to <see langword="null" />.
+        /// </param>
         public void Execute(object parameter)
         {
             var viewModel = (MainViewModel) parameter;
 
-            var dataNodeCollection = new DataNodeCollection(viewModel.UniqueStreamId);
+            var dataNodes =  _dataHarvester.Harvest();
 
-            foreach (var dataNode in viewModel.DataNodes)
-                dataNodeCollection.Nodes.Add(dataNode);
+          foreach (var dataNode in dataNodes)
+              viewModel.DataNodes.Add(dataNode);
 
-            string response = _webClientService.PostRequest(ApiEndPoints.PostNodeCollectionEndPoint, dataNodeCollection);
-
-            viewModel.TotalUploadCount = dataNodeCollection.Nodes.Count;
         }
 
         /// <summary>Occurs when changes occur that affect whether or not the command should execute.</summary>
         public event EventHandler CanExecuteChanged;
-
     }
 }

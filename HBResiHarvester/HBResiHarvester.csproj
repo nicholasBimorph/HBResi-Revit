@@ -150,7 +150,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DataHarvesters\AreaHarvester.cs" />
     <Compile Include="Models\Extensions\ParameterExtensions.cs" />
+    <Compile Include="Models\Interfaces\IHarvester.cs" />
+    <Compile Include="Models\Services\ApplicationServices.cs" />
     <Compile Include="Models\Settings\ApplicationSettings.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ResiHarvesterButton.cs" />
@@ -159,6 +162,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Models\Settings\RevitRibbon\HBResiHarvesterApp.cs" />
+    <Compile Include="UI\ViewModels\Commands\AreaHarvestCommand.cs" />
     <Compile Include="UI\ViewModels\Commands\UploadDataCommand.cs" />
     <Compile Include="UI\ViewModels\MainViewModel.cs" />
     <Compile Include="UI\Views\MainWindow.xaml.cs">

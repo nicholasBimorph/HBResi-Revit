@@ -14,19 +14,21 @@ namespace HBResiHarvester.Extensions
         /// <summary>
         /// Return the corresponding Storage Type value of a given Revit Parameter as a string representation
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="parameter"></param>
         /// <returns>Returns null if input parameter is also null </returns>
-        public static string GetParameterValueAsString(this Parameter p)
+        public static string GetParameterValueAsString(this Parameter parameter)
         {
             string output = "";
-            if (p == null) return output;
 
-            switch (p.StorageType)
+            if (parameter == null) return output;
+
+            switch (parameter.StorageType)
             {
 
                 case StorageType.Double:
                 {
-                    double value = Math.Round(p.AsDouble(),2);
+                    double value = Math.Round(parameter.AsDouble(),2);
+
                     string data = value.ToString();
 
                     if (data != null) 
@@ -36,7 +38,7 @@ namespace HBResiHarvester.Extensions
                 }
                 case StorageType.Integer:
                 {
-                    string data = p.AsInteger().ToString();
+                    string data = parameter.AsInteger().ToString();
 
                     if (data != null)
                         output = data;
@@ -45,7 +47,7 @@ namespace HBResiHarvester.Extensions
                 }
                 case StorageType.String:
                 {
-                    string data = p.AsString();
+                    string data = parameter.AsString();
 
                     if (data != null)
                         output = data;
@@ -53,7 +55,10 @@ namespace HBResiHarvester.Extensions
                 }
                 case StorageType.ElementId:
                 {
-                    string data = p.AsElementId().IntegerValue.ToString();
+                    //string data = parameter.AsElementId().IntegerValue.ToString();
+
+                    string data = parameter.AsValueString();
+
                     if (data != null)
                         output = data;
 

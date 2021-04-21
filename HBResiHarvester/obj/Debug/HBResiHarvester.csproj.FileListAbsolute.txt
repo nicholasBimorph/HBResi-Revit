@@ -1,3 +1,4 @@
+C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\MongoDB.Bson.xml
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\snappy32.dll
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\snappy64.dll
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\libzstd.dll
@@ -20,7 +21,6 @@ C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\MaterialDesignColors.pdb
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\MaterialDesignThemes.Wpf.xml
-C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\MongoDB.Bson.xml
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\MongoDB.Driver.xml
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\MongoDB.Driver.Core.xml
 C:\Users\NicholasRawitscher\source\repos\HBResi-Revit\HBResiHarvester\bin\Debug\System.Buffers.xml

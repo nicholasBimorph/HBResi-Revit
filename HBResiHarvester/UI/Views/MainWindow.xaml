@@ -18,15 +18,21 @@
         AllowsTransparency="True"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         KeyDown="MainWindow_OnKeyDown"
-        MouseDown="MainWindow_OnMouseDown">
+        MouseDown="MainWindow_OnMouseDown"
+        materialDesign:ShadowAssist.ShadowDepth="Depth4">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.light.xaml" />
+
+                <materialDesign:BundledTheme
+                    BaseTheme="Light"
+                    PrimaryColor="DeepOrange"
+                    SecondaryColor="Lime"/>
+
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/materialdesigncolor.deeporange.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+
+                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/accent/MaterialDesignColor.Lime.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -41,6 +47,7 @@
         <!-- Row definitions -->
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
+            <RowDefinition Height="40"/>
            
             <RowDefinition/>
             <RowDefinition Height="50"/>
@@ -56,18 +63,20 @@
             Command="{Binding UploadDataCommand}"
             CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Path=DataContext}"/>-->
 
-        <!--A button to go to the next page-->
-        <Button Name="ProceedButton" 
+        <!--A button to upload data to the Bimorph API server-->
+        <Button Name="UploadButton" 
                 Grid.Column="1" 
-                Grid.Row="1" 
+                Grid.Row="2" 
                 HorizontalAlignment="Right" 
                 Margin="0,0,0,0"
                 Foreground="White"
+                CommandParameter="{ Binding}"
                 Command="{Binding UploadDataCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Path=DataContext}"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Center"
+                IsEnabled="{Binding CanUploadData,UpdateSourceTrigger=PropertyChanged,NotifyOnTargetUpdated=True}"
                 Width="370">
+
             <Grid     
                 Height="20"    
                 Width="370">
@@ -88,40 +97,63 @@
 
         <Label Grid.Row="0" Grid.Column="1" Content="Resi Harvester" FontSize="35"/>
 
-        <Label Grid.Row="3" Grid.Column="1" Content="Identifier " FontSize="15"/>
+        <Label 
+            Grid.Row="4" 
+            Grid.Column="1" 
+            Content="Unique stream ID " 
+            FontSize="15"
+            ToolTip="The stream ID has to be unique."/>
 
         <Label 
-            Grid.Row="1" 
+            Grid.Row="3" 
             Grid.Column="1" 
             Content="Total uploaded data: " 
             FontSize="12" 
-            VerticalAlignment="Bottom"/>
+            VerticalAlignment="Top"
+            Margin="0,0,0,3"/>
 
-        <Label 
+        <!--<Label 
             Grid.Row="1" 
             Grid.Column="1" 
             Content="{Binding TotalUploadCount}" 
             FontSize="12" 
             VerticalAlignment="Bottom"
             HorizontalAlignment="Center"
-            Margin="-100,0,0,0"/>
+            Margin="-100,0,0,0"/>-->
 
-        <TextBox Grid.Row="1" 
+        <ToggleButton 
+            Grid.Column="1"
+            Grid.Row="1"
+            HorizontalAlignment="Left"/>
+
+        <Label 
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Content="Auto Sync" 
+            FontSize="10" 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="40,0,0,0"
+            Foreground="Gray"/>
+
+        <TextBox Grid.Row="3" 
                  Grid.Column="1"
                  HorizontalAlignment="Center"
-                 VerticalAlignment="Bottom"
-                 Text="{Binding TotalUploadCount}"
+                 VerticalAlignment="Top"
+                 Text="{Binding TotalUploadCount, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                 FontSize="12"
                  Margin="-80,0,0,0"
                  IsReadOnly="True"/>
 
         <TextBox 
-            Grid.Row="4" 
+            Grid.Row="5" 
             Grid.Column="1" 
-            IsReadOnly="True" 
-            Text="{Binding GeneratedId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-            HorizontalAlignment="Center" 
+            IsReadOnly="false" 
+            Text="{Binding UniqueStreamId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+            HorizontalAlignment="Left" 
             VerticalAlignment="Center"
             FontSize="20"/>
+
 
     </Grid>
 </Window>

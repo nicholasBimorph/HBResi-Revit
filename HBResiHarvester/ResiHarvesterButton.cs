@@ -8,6 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Bimorph.WebApi.Core;
 using Bimorph.WebApi.Core.Types;
+using HBResiHarvester.DataHarvesters;
 using HBResiHarvester.Extensions;
 using HBResiHarvester.Settings;
 using HBResiHarvester.UI.ViewModels;
@@ -59,38 +60,44 @@ namespace HBResiHarvester
 
            var webClientService = new WebClientService(jsonSerializer);
 
+           var applicationServices = new ApplicationServices(document, webClientService);
+
            var areaObjects = new FilteredElementCollector(document)
-                .OfCategory(BuiltInCategory.OST_Areas).WhereElementIsNotElementType()
-                .Cast<Area>();
+               .OfCategory(BuiltInCategory.OST_Areas).WhereElementIsNotElementType()
+               .Cast<Area>();
+
+            var areaHarvester = new AreaHarvester(areaObjects, jsonSerializer);
 
 
-            var nodeCollection = new DataNodeCollection();
 
-            foreach (var areaObject in areaObjects)
-            {
-                string level = areaObject.LookupParameter(ApplicationSettings.LevelParameterName).AsValueString();
+            //var nodeCollection = new DataNodeCollection();
+
+            //foreach (var areaObject in areaObjects)
+            //{
+            //    string level = areaObject.LookupParameter(ApplicationSettings.LevelParameterName).AsValueString();
 
 
-                string block = areaObject.LookupParameter(ApplicationSettings.BlockParameterName)
-                    .GetParameterValueAsString();
-               string spaceType = areaObject.LookupParameter(ApplicationSettings.SpaceTypeParameterName).GetParameterValueAsString();
-                string unitType = areaObject.LookupParameter(ApplicationSettings.UnitTypeParameterName).GetParameterValueAsString();
-                string tenure = areaObject.LookupParameter(ApplicationSettings.TenureParameterName).GetParameterValueAsString();
-                string accesibilityType = areaObject.LookupParameter(ApplicationSettings.AccessibilityTypeParameterName).GetParameterValueAsString();
-                string area = areaObject.LookupParameter(ApplicationSettings.AreaParameterName).AsValueString();
-                string number = areaObject.LookupParameter(ApplicationSettings.NumberParameterName).GetParameterValueAsString();
-                string areaType = areaObject.LookupParameter(ApplicationSettings.AreaTypeParameterName).AsValueString();
+            //    string block = areaObject.LookupParameter(ApplicationSettings.BlockParameterName)
+            //        .GetParameterValueAsString();
+            //   string spaceType = areaObject.LookupParameter(ApplicationSettings.SpaceTypeParameterName).GetParameterValueAsString();
+            //    string unitType = areaObject.LookupParameter(ApplicationSettings.UnitTypeParameterName).GetParameterValueAsString();
+            //    string tenure = areaObject.LookupParameter(ApplicationSettings.TenureParameterName).GetParameterValueAsString();
+            //    string accesibilityType = areaObject.LookupParameter(ApplicationSettings.AccessibilityTypeParameterName).GetParameterValueAsString();
+            //    string area = areaObject.LookupParameter(ApplicationSettings.AreaParameterName).AsValueString();
+            //    string number = areaObject.LookupParameter(ApplicationSettings.NumberParameterName).GetParameterValueAsString();
+            //    string areaType = areaObject.LookupParameter(ApplicationSettings.AreaTypeParameterName).AsValueString();
 
-                var bimorphArea = new BimorphArea("",level,block,spaceType,unitType,tenure,accesibilityType,area,number,areaType);
+            //    var bimorphArea = new BimorphArea("",level,block,spaceType,unitType,tenure,accesibilityType,area,number,areaType);
 
-               string jObject = jsonSerializer.Serialize<BimorphArea>(bimorphArea);
+            //   string jObject = jsonSerializer.Serialize<BimorphArea>(bimorphArea);
 
-                var node = new DataNode(jObject, typeof(BimorphArea));
+            //    var node = new DataNode(jObject, typeof(BimorphArea));
 
-               nodeCollection.Nodes.Add(node);
-            }
+            //   nodeCollection.Nodes.Add(node);
+            //}
 
-            var mainViewModel = new MainViewModel(webClientService, jsonSerializer, nodeCollection);
+
+            var mainViewModel = new MainViewModel(applicationServices, areaHarvester);
 
             var mainWindow = new MainWindow(mainViewModel);
 

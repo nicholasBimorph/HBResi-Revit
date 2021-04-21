@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace HBResiHarvester.Settings
 {
-    class ApplicationSettings
+    /// <summary>
+    /// The application settings foe the HB Resi Harvester Tool.
+    /// </summary>
+    internal class ApplicationSettings
     {
         public const string LevelParameterName = "Level";
+        public const string PlotParameterName = "Plot";
         public const string BlockParameterName = "Block";
         public const string SpaceTypeParameterName = "Space Type";
         public const string UnitTypeParameterName = "Unit Type";
