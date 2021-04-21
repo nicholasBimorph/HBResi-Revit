@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HBResiHarvester"
-        Title="MainWindow" Height="300" Width="400"
+        Title="MainWindow" Height="400" Width="400"
         WindowStyle="None" 
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -17,12 +17,13 @@
         BorderThickness="0"
         AllowsTransparency="True"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        KeyDown="MainWindow_OnKeyDown">
+        KeyDown="MainWindow_OnKeyDown"
+        MouseDown="MainWindow_OnMouseDown">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/materialdesigncolor.deeporange.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
@@ -39,8 +40,10 @@
 
         <!-- Row definitions -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="70"/>
+           
             <RowDefinition/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="70"/>
             <RowDefinition Height="10"/>
@@ -85,10 +88,34 @@
 
         <Label Grid.Row="0" Grid.Column="1" Content="Resi Harvester" FontSize="35"/>
 
-        <Label Grid.Row="2" Grid.Column="1" Content="Identifier " FontSize="15"/>
+        <Label Grid.Row="3" Grid.Column="1" Content="Identifier " FontSize="15"/>
+
+        <Label 
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Content="Total uploaded data: " 
+            FontSize="12" 
+            VerticalAlignment="Bottom"/>
+
+        <Label 
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Content="{Binding TotalUploadCount}" 
+            FontSize="12" 
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Center"
+            Margin="-100,0,0,0"/>
+
+        <TextBox Grid.Row="1" 
+                 Grid.Column="1"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Bottom"
+                 Text="{Binding TotalUploadCount}"
+                 Margin="-80,0,0,0"
+                 IsReadOnly="True"/>
 
         <TextBox 
-            Grid.Row="3" 
+            Grid.Row="4" 
             Grid.Column="1" 
             IsReadOnly="True" 
             Text="{Binding GeneratedId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 

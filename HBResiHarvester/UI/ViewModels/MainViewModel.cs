@@ -15,10 +15,24 @@ namespace HBResiHarvester.UI.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         private string _generatedId ="";
+        private int _totalUploadCount = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public UploadDataCommand UploadDataCommand { get; }
+
+        public int TotalUploadCount
+        {
+            get => _totalUploadCount;
+
+            set
+            {
+                _totalUploadCount = value;
+
+                this.OnPropertyChanged(nameof(this.TotalUploadCount));
+            }
+
+        }
 
         public string GeneratedId
         {
@@ -36,6 +50,9 @@ namespace HBResiHarvester.UI.ViewModels
         {
             
             this.UploadDataCommand = new UploadDataCommand(this,webClientService, jsonSerialization, dataNodeCollection);
+
+
+
         }
 
         [NotifyPropertyChangedInvocator]

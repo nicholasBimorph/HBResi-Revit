@@ -18,8 +18,6 @@ namespace HBResiHarvester.UI.ViewModels
 
         private MainViewModel _mainViewModel;
 
-        string urlPost = "https://localhost:44360/DataNodes";
-
         internal  UploadDataCommand(
             MainViewModel mainViewModel,
             WebClientService webClientService, 
@@ -47,9 +45,11 @@ namespace HBResiHarvester.UI.ViewModels
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to <see langword="null" />.</param>
         public void Execute(object parameter)
         {
-            string response = _webClientService.PostRequest(urlPost, _dataNodeCollection);
+            string response = _webClientService.PostRequest(ApiEndPoints.PostNodeCollectionEndPoint, _dataNodeCollection);
 
             _mainViewModel.GeneratedId = response;
+
+            _mainViewModel.TotalUploadCount = _dataNodeCollection.Nodes.Count;
         }
 
         /// <summary>Occurs when changes occur that affect whether or not the command should execute.</summary>

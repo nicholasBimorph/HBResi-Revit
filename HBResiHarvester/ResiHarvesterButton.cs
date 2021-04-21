@@ -79,7 +79,7 @@ namespace HBResiHarvester
                 string accesibilityType = areaObject.LookupParameter(ApplicationSettings.AccessibilityTypeParameterName).GetParameterValueAsString();
                 string area = areaObject.LookupParameter(ApplicationSettings.AreaParameterName).AsValueString();
                 string number = areaObject.LookupParameter(ApplicationSettings.NumberParameterName).GetParameterValueAsString();
-                string areaType = areaObject.LookupParameter(ApplicationSettings.AreaTypeParameterName).GetParameterValueAsString();
+                string areaType = areaObject.LookupParameter(ApplicationSettings.AreaTypeParameterName).AsValueString();
 
                 var bimorphArea = new BimorphArea("",level,block,spaceType,unitType,tenure,accesibilityType,area,number,areaType);
 

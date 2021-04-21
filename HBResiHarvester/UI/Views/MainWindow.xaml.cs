@@ -33,5 +33,10 @@ namespace HBResiHarvester
            if(e.Key == Key.Q)
                this.Close();
         }
+
+        private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+           this.DragMove();
+        }
     }
 }
