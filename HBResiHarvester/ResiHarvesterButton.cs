@@ -58,7 +58,7 @@ namespace HBResiHarvester
 
            var jsonSerializer = new Bimorph.WebApi.Core.JsonSerialization();
 
-           var webClientService = new WebClientService(jsonSerializer);
+           var webClientService = new BimorphAPIClientService(jsonSerializer);
 
            var applicationServices = new ApplicationServices(document, webClientService);
 
@@ -67,35 +67,6 @@ namespace HBResiHarvester
                .Cast<Area>();
 
             var areaHarvester = new AreaHarvester(areaObjects, jsonSerializer);
-
-
-
-            //var nodeCollection = new DataNodeCollection();
-
-            //foreach (var areaObject in areaObjects)
-            //{
-            //    string level = areaObject.LookupParameter(ApplicationSettings.LevelParameterName).AsValueString();
-
-
-            //    string block = areaObject.LookupParameter(ApplicationSettings.BlockParameterName)
-            //        .GetParameterValueAsString();
-            //   string spaceType = areaObject.LookupParameter(ApplicationSettings.SpaceTypeParameterName).GetParameterValueAsString();
-            //    string unitType = areaObject.LookupParameter(ApplicationSettings.UnitTypeParameterName).GetParameterValueAsString();
-            //    string tenure = areaObject.LookupParameter(ApplicationSettings.TenureParameterName).GetParameterValueAsString();
-            //    string accesibilityType = areaObject.LookupParameter(ApplicationSettings.AccessibilityTypeParameterName).GetParameterValueAsString();
-            //    string area = areaObject.LookupParameter(ApplicationSettings.AreaParameterName).AsValueString();
-            //    string number = areaObject.LookupParameter(ApplicationSettings.NumberParameterName).GetParameterValueAsString();
-            //    string areaType = areaObject.LookupParameter(ApplicationSettings.AreaTypeParameterName).AsValueString();
-
-            //    var bimorphArea = new BimorphArea("",level,block,spaceType,unitType,tenure,accesibilityType,area,number,areaType);
-
-            //   string jObject = jsonSerializer.Serialize<BimorphArea>(bimorphArea);
-
-            //    var node = new DataNode(jObject, typeof(BimorphArea));
-
-            //   nodeCollection.Nodes.Add(node);
-            //}
-
 
             var mainViewModel = new MainViewModel(applicationServices, areaHarvester);
 

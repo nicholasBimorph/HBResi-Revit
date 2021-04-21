@@ -12,9 +12,9 @@ namespace HBResiHarvester
     {
         public Document Document { get; }
 
-        public WebClientService WebClientService { get; }
+        public BimorphAPIClientService WebClientService { get; }
 
-        public ApplicationServices(Document document , WebClientService webClientService)
+        public ApplicationServices(Document document , BimorphAPIClientService webClientService)
         {
             this.Document = document;
 

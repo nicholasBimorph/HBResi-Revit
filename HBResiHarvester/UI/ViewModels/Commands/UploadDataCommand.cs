@@ -10,9 +10,9 @@ namespace HBResiHarvester.UI.ViewModels
 {
     public class UploadDataCommand : ICommand
     {
-        private readonly WebClientService _webClientService;
+        private readonly BimorphAPIClientService _webClientService;
 
-        internal  UploadDataCommand(WebClientService webClientService)
+        internal  UploadDataCommand(BimorphAPIClientService webClientService)
         {
             _webClientService = webClientService;
         }
@@ -36,7 +36,18 @@ namespace HBResiHarvester.UI.ViewModels
             foreach (var dataNode in viewModel.DataNodes)
                 dataNodeCollection.Nodes.Add(dataNode);
 
-            string response = _webClientService.PostRequest(ApiEndPoints.PostNodeCollectionEndPoint, dataNodeCollection);
+            string response = "";
+
+            if (viewModel.AutoSync)
+            {
+                string requestUrl = ApiEndPoints.PutNodeCollectionEndPoint + viewModel.UniqueStreamId;
+
+                response = _webClientService.PutRequest(requestUrl, dataNodeCollection);
+
+                return;
+            }
+
+            response = _webClientService.PostRequest(ApiEndPoints.PostNodeCollectionEndPoint, dataNodeCollection);
 
             viewModel.TotalUploadCount = dataNodeCollection.Nodes.Count;
         }

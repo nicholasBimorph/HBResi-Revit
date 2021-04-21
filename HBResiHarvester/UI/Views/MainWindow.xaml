@@ -17,6 +17,7 @@
         BorderThickness="0"
         AllowsTransparency="True"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewModels="clr-namespace:HBResiHarvester.UI.ViewModels"
         KeyDown="MainWindow_OnKeyDown"
         MouseDown="MainWindow_OnMouseDown"
         materialDesign:ShadowAssist.ShadowDepth="Depth4">
@@ -34,6 +35,9 @@
 
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/accent/MaterialDesignColor.Lime.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
+
+            <viewModels:InverseBooleanConverter x:Key="InverseBoolConverter"/>
+
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -100,7 +104,7 @@
         <Label 
             Grid.Row="4" 
             Grid.Column="1" 
-            Content="Unique stream ID " 
+            Content="Unique stream ID : " 
             FontSize="15"
             ToolTip="The stream ID has to be unique."/>
 
@@ -124,7 +128,8 @@
         <ToggleButton 
             Grid.Column="1"
             Grid.Row="1"
-            HorizontalAlignment="Left"/>
+            HorizontalAlignment="Left"
+            IsChecked="{Binding AutoSync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label 
             Grid.Row="1" 
@@ -152,8 +157,8 @@
             Text="{Binding UniqueStreamId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Center"
-            FontSize="20"/>
-
+            FontSize="20"
+            IsEnabled="{Binding AutoSync,Converter={StaticResource  InverseBoolConverter},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
     </Grid>
 </Window>

@@ -17,14 +17,22 @@ namespace HBResiHarvester.UI.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        //private string _generatedId ="";
+        
         private bool _canUpload = false;
+        private bool _autoSync = false;
         private string _uniqueStreamId;
         private int _totalUploadCount;
         private Document _document;
 
+        /// <summary>
+        /// An event which is raised if any property
+        /// of this <see cref="MainViewModel"/> changes.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// The command to upload data to the Bimorph server.
+        /// </summary>
         public UploadDataCommand UploadDataCommand { get; }
 
         /// <summary>
@@ -33,6 +41,10 @@ namespace HBResiHarvester.UI.ViewModels
         /// </summary>
         public IList<DataNode> DataNodes { get; }
 
+        /// <summary>
+        /// Gets the total amount of data that was uploaded
+        /// to the Bimorph server.
+        /// </summary>
         public int TotalUploadCount
         {
             get => _totalUploadCount;
@@ -46,11 +58,15 @@ namespace HBResiHarvester.UI.ViewModels
 
         }
 
+        /// <summary>
+        /// Determines whether data can be uploaded
+        /// to the Bimorph server or not.
+        /// </summary>
         public bool CanUploadData => this.CanUpload();
 
         /// <summary>
         /// The unique stream id to send data to the
-        /// Bimorph API.
+        /// Bimorph server.
         /// </summary>
         public string UniqueStreamId
         {
@@ -66,17 +82,22 @@ namespace HBResiHarvester.UI.ViewModels
             }
         }
 
-        //public string GeneratedId
-        //{
-        //    get => _generatedId;
+        /// <summary>
+        /// Determines whether the data that will be uploaded
+        /// will modify an existing <see cref="DataNodeCollection"/>
+        /// in the data base.
+        /// </summary>
+        public bool AutoSync
+        {
+            get => _autoSync;
 
-        //    set
-        //    {
-        //        _generatedId = value;
+            set
+            {
+                _autoSync = value;
 
-        //        this.OnPropertyChanged(nameof(this.GeneratedId));
-        //    }
-        //}
+                this.OnPropertyChanged(nameof(this.AutoSync));
+            }
+        }
 
         /// <summary>
         /// Construct a <see cref="MainViewModel"/>.
@@ -100,6 +121,10 @@ namespace HBResiHarvester.UI.ViewModels
                 this.DataNodes.Add(dataNode);
         }
 
+        /// <summary>
+        /// Determines whether data can be uploaded
+        /// to the Bimorph server or not.
+        /// </summary>
         private bool CanUpload()
         {
             return this.UniqueStreamId != _document.Title;
