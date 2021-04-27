@@ -11,16 +11,6 @@ namespace HBResiHarvester.Settings
     /// </summary>
     internal class ApplicationSettings
     {
-        public const string LevelParameterName = "Level";
-        public const string PlotParameterName = "Plot";
-        public const string BlockParameterName = "Block";
-        public const string SpaceTypeParameterName = "Space Type";
-        public const string UnitTypeParameterName = "Unit Type";
-        public const string TenureParameterName = "Tenure";
-        public const string AccessibilityTypeParameterName = "Accessibility Type";
-        public const string AreaParameterName = "Area";
-        public const string NumberParameterName = "Number";
-        public const string AreaTypeParameterName = "Area Type";
-
+        
     }
 }

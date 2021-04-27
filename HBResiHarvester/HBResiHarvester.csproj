@@ -155,6 +155,7 @@
     <Compile Include="Models\Interfaces\IHarvester.cs" />
     <Compile Include="Models\Services\ApplicationServices.cs" />
     <Compile Include="Models\Settings\ApplicationSettings.cs" />
+    <Compile Include="Models\Settings\AreaParameterNames.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ResiHarvesterButton.cs" />
     <Page Include="UI\Views\MainWindow.xaml">

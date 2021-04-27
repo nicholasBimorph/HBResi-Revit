@@ -29,18 +29,18 @@ namespace HBResiHarvester.UI.ViewModels
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to <see langword="null" />.</param>
         public void Execute(object parameter)
         {
-            var viewModel = (MainViewModel) parameter;
+            var mainViewModel = (MainViewModel) parameter;
 
-            var dataNodeCollection = new DataNodeCollection(viewModel.UniqueStreamId);
+            var dataNodeCollection = new DataNodeCollection(mainViewModel.UniqueStreamId);
 
-            foreach (var dataNode in viewModel.DataNodes)
+            foreach (var dataNode in mainViewModel.DataNodes)
                 dataNodeCollection.Nodes.Add(dataNode);
 
             string response = "";
 
-            if (viewModel.AutoSync)
+            if (mainViewModel.AutoSync)
             {
-                string requestUrl = ApiEndPoints.PutNodeCollectionEndPoint + viewModel.UniqueStreamId;
+                string requestUrl = ApiEndPoints.PutNodeCollectionEndPoint + mainViewModel.UniqueStreamId;
 
                 response = _webClientService.PutRequest(requestUrl, dataNodeCollection);
 
@@ -49,7 +49,7 @@ namespace HBResiHarvester.UI.ViewModels
 
             response = _webClientService.PostRequest(ApiEndPoints.PostNodeCollectionEndPoint, dataNodeCollection);
 
-            viewModel.TotalUploadCount = dataNodeCollection.Nodes.Count;
+            mainViewModel.TotalUploadCount = dataNodeCollection.Nodes.Count;
         }
 
         /// <summary>Occurs when changes occur that affect whether or not the command should execute.</summary>

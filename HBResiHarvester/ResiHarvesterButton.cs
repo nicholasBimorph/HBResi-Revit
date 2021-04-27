@@ -66,7 +66,7 @@ namespace HBResiHarvester
                .OfCategory(BuiltInCategory.OST_Areas).WhereElementIsNotElementType()
                .Cast<Area>();
 
-            var areaHarvester = new AreaHarvester(areaObjects, jsonSerializer);
+            var areaHarvester = new AreaHarvester(areaObjects, jsonSerializer, applicationServices);
 
             var mainViewModel = new MainViewModel(applicationServices, areaHarvester);
 
