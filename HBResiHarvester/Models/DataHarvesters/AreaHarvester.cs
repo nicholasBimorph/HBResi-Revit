@@ -69,7 +69,6 @@ namespace HBResiHarvester.DataHarvesters
                         parameters.Add(parameter);
                     }
 
-                //var bimorphArea = new BimorphArea(parameters);
 
                 var bimorphArea = new BimorphArea(parameters);
                 
