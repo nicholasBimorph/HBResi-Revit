@@ -155,6 +155,7 @@
     <Compile Include="Models\Extensions\ParameterExtensions.cs" />
     <Compile Include="Models\Extensions\SolidExtensions.cs" />
     <Compile Include="Models\Extractors\RoomVolumeExtractor.cs" />
+    <Compile Include="Models\Interfaces\IGeometryExtractor.cs" />
     <Compile Include="Models\Interfaces\IHarvester.cs" />
     <Compile Include="Models\Services\ApplicationServices.cs" />
     <Compile Include="Models\Settings\ApplicationSettings.cs" />
