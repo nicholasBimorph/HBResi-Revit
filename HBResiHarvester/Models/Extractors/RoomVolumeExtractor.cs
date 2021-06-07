@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using HBResiHarvester.Interfaces;
 
 namespace HBResiHarvester.Extractors
 {
@@ -17,10 +18,15 @@ namespace HBResiHarvester.Extractors
         private readonly IEnumerable<Room> _rooms;
 
         /// <summary>
-        /// Construct a <see cref="RoomVolumeExtractor"/>.
+        /// Construct a <see cref="RoomShellExtractor"/>.
         /// </summary>
         internal RoomShellExtractor(IEnumerable<Room> rooms) => _rooms = rooms;
 
+        /// <summary>
+        /// Extracts a collection of a defined geometrical information
+        /// from an entity that contains geometrical attributes.
+        /// TODO: room closed shells should only be extracted if room is contained within an area.
+        /// </summary>
         public IEnumerable<Solid> Extract()
         {
             var solids = new List<Solid>();
@@ -48,6 +54,8 @@ namespace HBResiHarvester.Extractors
                     }
                 }
             }
+
+            return solids;
         }
        
     }

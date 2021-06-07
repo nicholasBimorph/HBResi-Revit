@@ -18,7 +18,6 @@ namespace HBResiHarvester.Interfaces
         /// Extracts a collection of a defined geometrical information
         /// from an entity that contains geometrical attributes.
         /// </summary>
-        /// <returns></returns>
         IEnumerable<T> Extract();
     }
 }
