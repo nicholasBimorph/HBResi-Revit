@@ -14,65 +14,51 @@ namespace HBResiHarvester.Extensions
         /// Converts the Revit <paramref name="solid"/> in to a
         /// <see cref="BimorphMesh"/>
         /// </summary>
-        /// <param name="solid"></param>
-        /// <param name="geometryInstance">
-        /// The  <see cref="GeometryInstance"/> that was used to extract the <paramref name="solid"/>.
-        /// </param>
-        public static BimorphMesh ToBimorphMesh(this Solid solid, GeometryInstance geometryInstance)
+        public static BimorphMesh ToBimorphMesh(this Solid solid)
         {
-            var faceArray = solid.Faces;
+           
 
-            int totalFaces = faceArray.Size;
+            var controls = new SolidOrShellTessellationControls()
+            {
+                Accuracy = 0.03,
+                LevelOfDetail = 0.1,
+                MinAngleInTriangle = 3 * Math.PI / 180.0,
+                MinExternalAngleBetweenTriangles = 0.2 * Math.PI
+            };
+
+
+            var triangulatedShell = SolidUtils.TessellateSolidOrShell(solid, controls);
+
+
+            var component = triangulatedShell.GetShellComponent(0);
+
+            int totalVertices = component.VertexCount;
+
+            int totalFaces = component.TriangleCount;
 
             var faces = new int[totalFaces][];
 
-            var verticesTemp = new List<XYZ>();
-
-            var instanceTransform = geometryInstance.Transform;
+            var vertices = new double[totalVertices][];
 
 
-            int faceCounter = 0;
-
-            foreach (Face face in faceArray)
+            for (int i = 0; i < totalFaces; i++)
             {
-                var faceAsMesh = face.Triangulate();
+               var face = component.GetTriangle(i);
 
-                var faceAsMeshVertices = faceAsMesh.Vertices;
+               var faceIndices = new[] {face.VertexIndex0, face.VertexIndex1, face.VertexIndex2};
 
-                int totalFacesInMeshFace = faceAsMesh.NumTriangles;
+               faces[i] = faceIndices;
 
-
-                for (int i = 0; i < totalFacesInMeshFace; i++)
-                {
-                    var triangle = faceAsMesh.get_Triangle(i);
-
-                    var triangleIndices = new int[3];
-
-                    for (int j = 0; j < 3; ++j)
-                    {
-                        int k = (int)triangle.get_Index(j);
-
-                        triangleIndices[j] = k;
-
-                    }
-
-                    faces[faceCounter] = triangleIndices;
-
-                }
-
-                verticesTemp.AddRange(faceAsMeshVertices.Select(vertex => instanceTransform.OfPoint(vertex)));
-
-                faceCounter++;
             }
 
-            var vertices = new double[verticesTemp.Count][];
-
-            for (int i = 0; i < verticesTemp.Count; i++)
+            for (int i = 0; i < totalVertices; i++)
             {
-                var vertex = verticesTemp[i];
+               var vertex = component.GetVertex(i);
 
-                vertices[i] = new[] { vertex.X, vertex.Y, vertex.Z };
+               vertices[i] = new[] { vertex.X, vertex.Y, vertex.Z };
+
             }
+
 
             return new BimorphMesh(vertices, faces);
         }

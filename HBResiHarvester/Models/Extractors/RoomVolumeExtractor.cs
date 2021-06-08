@@ -22,6 +22,7 @@ namespace HBResiHarvester.Extractors
         /// </summary>
         internal RoomShellExtractor(IEnumerable<Room> rooms) => _rooms = rooms;
 
+
         /// <summary>
         /// Extracts a collection of a defined geometrical information
         /// from an entity that contains geometrical attributes.
@@ -38,25 +39,34 @@ namespace HBResiHarvester.Extractors
 
                 foreach (var geoObject in shell)
                 {
-                    var geoObjectInstance = geoObject as GeometryInstance;
+                    var solid = geoObject as Solid;
 
-                    if (null == geoObjectInstance) continue;
+                    if (null == solid ||
+                        solid.Faces.Size == 0 ||
+                        solid.Edges.Size == 0
+                        || solid.Volume<=0) continue;
 
-                    foreach (var instObj in geoObjectInstance.SymbolGeometry)
-                    {
-                        var solid = instObj as Solid;
-                        if (null == solid ||
-                            0 == solid.Faces.Size ||
-                            0 == solid.Edges.Size) continue;
+                    solids.Add(solid);
 
-                        solids.Add(solid);
 
-                    }
+                   //var geoObjectInstance = geoObject as GeometryInstance;
+
+                   //if (null == geoObjectInstance) continue;
+
+                   //foreach (var instObj in geoObjectInstance.SymbolGeometry)
+                   //{
+                   //    var solid = instObj as Solid;
+                   //    if (null == solid ||
+                   //        0 == solid.Faces.Size ||
+                   //        0 == solid.Edges.Size) continue;
+
+                   //    solids.Add(solid);
+
+                   //}
                 }
             }
 
             return solids;
         }
-       
     }
 }

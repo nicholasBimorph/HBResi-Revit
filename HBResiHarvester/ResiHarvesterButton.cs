@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Bimorph.WebApi.Core;
 using Bimorph.WebApi.Core.Types;
 using HBResiHarvester.DataHarvesters;
 using HBResiHarvester.Extensions;
+using HBResiHarvester.Extractors;
 using HBResiHarvester.Settings;
 using HBResiHarvester.UI.ViewModels;
 using Area = Autodesk.Revit.DB.Area;
@@ -66,9 +68,16 @@ namespace HBResiHarvester
                .OfCategory(BuiltInCategory.OST_Areas).WhereElementIsNotElementType()
                .Cast<Area>();
 
-            var areaHarvester = new AreaHarvester(areaObjects, jsonSerializer, applicationServices);
+           var rooms = new FilteredElementCollector(document)
+               .OfCategory(BuiltInCategory.OST_Rooms).WhereElementIsNotElementType()
+               .Cast<Room>();
 
-            var mainViewModel = new MainViewModel(applicationServices, areaHarvester);
+            // var areaHarvester = new AreaHarvester(areaObjects, jsonSerializer, applicationServices);
+
+            var roomShells = new RoomShellExtractor(rooms).Extract();
+            var roomShellHarvester = new RoomShellHarvester(roomShells, jsonSerializer);
+
+            var mainViewModel = new MainViewModel(applicationServices, roomShellHarvester /*areaHarvester*/);
 
             var mainWindow = new MainWindow(mainViewModel);
 
